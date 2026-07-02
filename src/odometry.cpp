@@ -1,4 +1,5 @@
 #include "main.h"
+#include "pros/motors.h"
 
 /*
                                                             
@@ -17,18 +18,21 @@ m8888>  98888F  "***"  9888%  X8888   8888:  :8888E   ^""
                                                             
                                                             
 */
+
 // drive motors
 
-pros::Motor lf(0, MotorGears::blue);     // Left Front
-pros::Motor lb(1, MotorGears::blue);     // Left Back
-pros::Motor lh(2, MotorGears::rpm_200);   // Left 5.5W
-pros::Motor rf(3, MotorGears::blue);     // Right Front
-pros::Motor rb(4, MotorGears::blue);     // Right Back
-pros::Motor rh(5, MotorGears::rpm_200);   // Right 5.5W
-    
-// Motor Groups
-pros::MotorGroup leftMotors({lf.get_port(), lb.get_port(), lh.get_port()}); // left motor group
-pros::MotorGroup rightMotors({rf.get_port(), rb.get_port(), rh.get_port()}); // right motor group
+    // Define motors (use default constructors for portability; gearing set on groups below)
+    pros::Motor lf(0);     // Left Front
+    pros::Motor lb(1);     // Left Back
+    pros::Motor lh(2);     // Left 5.5W
+    pros::Motor rf(3);     // Right Front
+    pros::Motor rb(4);     // Right Back
+    pros::Motor rh(5);     // Right 5.5W
+        
+    // Create the motor groups
+
+    pros::MotorGroup leftMotors({lf.get_port(), lb.get_port(), lh.get_port()});     // Left side motors
+    pros::MotorGroup rightMotors({rf.get_port(), rb.get_port(), rh.get_port()});    // Right side motors
 
 //? Lemlib Odometry
 Imu imu(15);
