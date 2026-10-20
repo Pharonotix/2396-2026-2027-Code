@@ -16,7 +16,7 @@
 *                                ^"===""                     
 */
 
-
+using pros::Motor;
 
 bool runerror; // Global variable to track if an error has occurred
 
@@ -24,11 +24,17 @@ struct MotorCheck {
     pros::Motor& motor;
     std::string name;
     int disconnectFailCount = 0;
+    bool disconnected = false;
+    pros::Motor motorinv;
 };
 
 MotorCheck motors[] = {
-    {lt, "Left top"}, {lb, "Left back"}, {lbt, "Left bottom"},
-    {rt, "Right top"}, {rb, "Right back"}, {rbt, "Right bottom"}
+    {lt, "Left top", 0, false, rt},
+    {lb, "Left back", 0, false, rb},
+    {lbt, "Left bottom", 0, false, rbt},
+    {rt, "Right top", 0, false, lt},
+    {rb, "Right back", 0, false, lb},
+    {rbt, "Right bottom", 0, false, lbt}
 };
 
 const int DISCONNECT_THRESHOLD = 3; // consecutive bad reads required before flagging
@@ -48,6 +54,7 @@ void errors() {
             if (m.disconnectFailCount >= DISCONNECT_THRESHOLD) {
                 allErrors += m.name + " disconnected Port: " + std::to_string(m.motor.get_port()) + "\n";
                 runerror = true;
+                m.disconnected = true;
             }
         } else {
             m.disconnectFailCount = 0; // good read resets the counter
@@ -69,8 +76,15 @@ void errors() {
             allErrors += m.name + " has an H-Bridge Over Current Error: " + std::to_string(m.motor.get_port()) + "\n";
             runerror = true;
         }
-
+        if (m.disconnected == true) {
+            m.motor.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+            m.motorinv.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+            m.motor.set_voltage_limit(0);
+            m.motorinv.set_voltage_limit(0);
+        }
     }
+
+    
 
     if (!allErrors.empty()) {
         // LVGL function
