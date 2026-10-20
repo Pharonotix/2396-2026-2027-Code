@@ -27,8 +27,8 @@ struct MotorCheck {
 };
 
 MotorCheck motors[] = {
-    {lf, "Left front"}, {lb, "Left back"}, {lh, "Left 5.5w"},
-    {rf, "Right front"}, {rb, "Right back"}, {rh, "Right 5.5w"}
+    {lt, "Left top"}, {lb, "Left back"}, {lbt, "Left bottom"},
+    {rt, "Right top"}, {rb, "Right back"}, {rbt, "Right bottom"}
 };
 
 const int DISCONNECT_THRESHOLD = 3; // consecutive bad reads required before flagging

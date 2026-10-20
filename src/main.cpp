@@ -36,4 +36,16 @@ void initialize() {
 void disabled() {}
 void competition_initialize() {}
 void autonomous() {}
-void opcontrol() {}
+void opcontrol() {
+      while (true) {
+        // get left y and right x positions
+        int leftY = MasterController.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+        int rightX = MasterController.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+
+        // move the robot
+        chassis.arcade(leftY, rightX);
+
+        // delay to save resources
+        pros::delay(25);
+    }
+}

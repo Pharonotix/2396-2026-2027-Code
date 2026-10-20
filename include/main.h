@@ -77,7 +77,7 @@ extern "C" {
         
         extern Controller MasterController;
 
-        extern Motor lf, lb, lh, rf, rb, rh;
+        extern Motor lb, lt, lbt, rb, rt, rbt;
 
         extern MotorGroup leftMotors, rightMotors;
         extern Rotation horizontalEnc, verticalEnc;

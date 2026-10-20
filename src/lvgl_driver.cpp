@@ -29,7 +29,7 @@ extern lv_obj_t *ui_LabelThetaValue;
 
 namespace {
 // Formats a double and pushes it into a label, with a null check.
-// decimals defaults to 2 to match your current "%.2f" formatting.
+// decimals defaults to 2 to match your current "%.2f" formaztting.
 void setLabelDouble(lv_obj_t* label, double value, int decimals = 2) {
     if (label == nullptr) {
         return;
